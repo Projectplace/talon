@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import
-from ... import *
-
-import regex as re
-
+from tests import *
 from talon.signature.learning import helpers as h
 from talon.signature.learning.helpers import *
 from six.moves import range
@@ -140,21 +136,21 @@ def test_extract_names():
         "* * * * <the_pod1@example.com>": ["the", "pod"],
         '"**Bobby B**" <copymycashsystem@example.com>': ["Bobby", "copymycashsystem"],
         # from crash reports `bad escape`
-        '"M Ali B Azlan \(GHSE/PETH\)" <aliazlan@example.com>': ["Ali", "Azlan"],
-        ('"Ridthauddin B A Rahim \(DD/PCSB\)"' " <ridthauddin_arahim@example.com>"): [
+        r'"M Ali B Azlan \(GHSE/PETH\)" <aliazlan@example.com>': ["Ali", "Azlan"],
+        r'"Ridthauddin B A Rahim \(DD/PCSB\)"' " <ridthauddin_arahim@example.com>": [
             "Ridthauddin",
             "Rahim",
         ],
         (
-            '"Boland, Patrick \(Global Xxx Group, Ireland \)"'
+            r'"Boland, Patrick \(Global Xxx Group, Ireland \)"'
             " <Patrick.Boland@example.com>"
         ): ["Boland", "Patrick"],
-        '"Mates Rate \(Wine\)" <amen@example.com.com>': ["Mates", "Rate", "Wine"],
+        r'"Mates Rate \(Wine\)" <amen@example.com.com>': ["Mates", "Rate", "Wine"],
         (
-            '"Morgan, Paul \(Business Xxx RI, Xxx Xxx Group\)"'
+            r'"Morgan, Paul \(Business Xxx RI, Xxx Xxx Group\)"'
             " <paul.morgan@example.com>"
         ): ["Morgan", "Paul"],
-        '"David DECOSTER \(Domicile\)" <decosterdavid@xxx.be>': [
+        r'"David DECOSTER \(Domicile\)" <decosterdavid@xxx.be>': [
             "David",
             "DECOSTER",
             "Domicile",
@@ -169,7 +165,7 @@ def test_extract_names():
         except Exception as e:
             ok_(
                 False,
-                ("Failed to compile extracted names {}" "\n\nReason: {}").format(
+                "Failed to compile extracted names {}" "\n\nReason: {}".format(
                     extracted_names, e
                 ),
             )

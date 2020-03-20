@@ -1,13 +1,8 @@
 # -*- coding: utf-8 -*-
-
-from __future__ import absolute_import
-from ... import *
+from tests import *
 import os
-
 from numpy import genfromtxt
-
 from talon.signature.learning import dataset as d
-
 from talon.signature.learning.featurespace import features
 
 

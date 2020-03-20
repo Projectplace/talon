@@ -216,7 +216,7 @@ def cut_from_block(html_message):
     # handle the case when From: block goes right after e.g. <hr>
     # and not enclosed in some tag
     block = html_message.xpath(
-        ("//*[starts-with(mg:tail(), 'From:')]|" "//*[starts-with(mg:tail(), 'Date:')]")
+        "//*[starts-with(mg:tail(), 'From:')]|" "//*[starts-with(mg:tail(), 'Date:')]"
     )
     if block:
         block = block[0]
@@ -231,7 +231,7 @@ def cut_from_block(html_message):
 
 
 def cut_zimbra_quote(html_message):
-    zDivider = html_message.xpath('//hr[@data-marker="__DIVIDER__"]')
-    if zDivider:
-        zDivider[0].getparent().remove(zDivider[0])
+    z_divider = html_message.xpath('//hr[@data-marker="__DIVIDER__"]')
+    if z_divider:
+        z_divider[0].getparent().remove(z_divider[0])
         return True

@@ -16,13 +16,10 @@ suffix and the corresponding sender file has the same name except for the
 suffix which should be `_sender`.
 """
 
-from __future__ import absolute_import
-
 import os
 
 import regex as re
 from six.moves import range
-
 from talon.signature.constants import SIGNATURE_MAX_LINES
 from talon.signature.learning.featurespace import build_pattern, features
 
@@ -83,7 +80,7 @@ def parse_msg_sender(filename, sender_known=True):
                         if match:
                             sender = match.group(1)
                             break
-    return (sender, msg)
+    return sender, msg
 
 
 def build_detection_class(folder, dataset_filename, label, sender_known=True):
@@ -105,9 +102,9 @@ def build_detection_class(folder, dataset_filename, label, sender_known=True):
             if sender is None or msg is None:
                 continue
             msg = re.sub("|".join(ANNOTATIONS), "", msg)
-            X = build_pattern(msg, features(sender))
-            X.append(label)
-            labeled_pattern = ",".join([str(e) for e in X])
+            x = build_pattern(msg, features(sender))
+            x.append(label)
+            labeled_pattern = ",".join([str(e) for e in x])
             dataset.write(labeled_pattern + "\n")
 
 
@@ -153,11 +150,11 @@ def build_extraction_dataset(folder, dataset_filename, sender_known=True):
                 label = -1
                 if line[: len(SIGNATURE_ANNOTATION)] == SIGNATURE_ANNOTATION:
                     label = 1
-                    line = line[len(SIGNATURE_ANNOTATION) :]
+                    line = line[len(SIGNATURE_ANNOTATION):]
                 elif line[: len(REPLY_ANNOTATION)] == REPLY_ANNOTATION:
-                    line = line[len(REPLY_ANNOTATION) :]
+                    line = line[len(REPLY_ANNOTATION):]
 
-                X = build_pattern(line, features(sender))
-                X.append(label)
-                labeled_pattern = ",".join([str(e) for e in X])
+                x = build_pattern(line, features(sender))
+                x.append(label)
+                labeled_pattern = ",".join([str(e) for e in x])
                 dataset.write(labeled_pattern + "\n")

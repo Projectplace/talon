@@ -1,12 +1,9 @@
 # coding:utf-8
 
-from __future__ import absolute_import
-
 import cchardet
 import six
-
 from talon import utils as u
-from . import *
+from tests import *
 
 
 def test_get_delimiter():

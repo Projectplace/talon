@@ -1,9 +1,5 @@
 # coding:utf-8
-
-from __future__ import absolute_import
-
 from random import shuffle
-
 import cchardet
 import chardet
 import html5lib
@@ -11,8 +7,10 @@ import regex as re
 import six
 from lxml.cssselect import CSSSelector
 from lxml.html import html5parser
-
 from talon.constants import RE_DELIMITER
+import logging
+
+log = logging.getLogger(__name__)
 
 
 def safe_format(format_string, *args, **kwargs):
@@ -36,7 +34,7 @@ def safe_format(format_string, *args, **kwargs):
 
     # ignore other errors
     except:
-        return u""
+        return ""
 
 
 def to_unicode(str_or_unicode, precise=False):
@@ -66,6 +64,7 @@ def detect_encoding(string):
         if detected:
             return detected.get("encoding") or "utf-8"
     except Exception as e:
+        log.exception(e)
         pass
     return "utf-8"
 
@@ -82,6 +81,7 @@ def quick_detect_encoding(string):
         if detected:
             return detected.get("encoding") or detect_encoding(string)
     except Exception as e:
+        log.exception(e)
         pass
     return detect_encoding(string)
 

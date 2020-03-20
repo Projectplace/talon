@@ -4,15 +4,18 @@
 The module's functions operate on message bodies trying to extract
 original messages (without quoted messages)
 """
-
-from __future__ import absolute_import
 import regex as re
 import logging
 from copy import deepcopy
-
-from lxml import html, etree
-
-from talon.utils import get_delimiter, html_tree_to_text, html_document_fromstring
+from lxml import (
+    html,
+    etree
+)
+from talon.utils import (
+    get_delimiter,
+    html_tree_to_text,
+    html_document_fromstring
+)
 from talon import html_quotations
 from six.moves import range
 import six
@@ -21,7 +24,7 @@ import six
 log = logging.getLogger(__name__)
 
 
-RE_FWD = re.compile("^[-]+[ ]*Forwarded message[ ]*[-]+\s*$", re.I | re.M)
+RE_FWD = re.compile(r"^[-]+[ ]*Forwarded message[ ]*[-]+\s*$", re.I | re.M)
 
 RE_ON_DATE_SMB_WROTE = re.compile(
     u"(-*[>]?[ ]?({0})[ ].*({1})(.*\n){{0,2}}.*({2}):?-*)".format(
@@ -41,7 +44,7 @@ RE_ON_DATE_SMB_WROTE = re.compile(
                 # Portuguese
                 "Em",
                 # Norwegian
-                u"På",
+                "På",
                 # Swedish, Danish
                 "Den",
                 # Vietnamese
@@ -49,24 +52,24 @@ RE_ON_DATE_SMB_WROTE = re.compile(
             )
         ),
         # Date and sender separator
-        u"|".join(
+        "|".join(
             (
                 # most languages separate date and sender address by comma
                 ",",
                 # polish date and sender address separator
-                u"użytkownik",
+                "użytkownik",
             )
         ),
         # Ending of the line
-        u"|".join(
+        "|".join(
             (
                 # English
                 "wrote",
                 "sent",
                 # French
-                u"a écrit",
+                "a écrit",
                 # Polish
-                u"napisał",
+                "napisał",
                 # Dutch
                 "schreef",
                 "verzond",
@@ -78,16 +81,16 @@ RE_ON_DATE_SMB_WROTE = re.compile(
                 # Norwegian, Swedish
                 "skrev",
                 # Vietnamese
-                u"đã viết",
+                "đã viết",
             )
         ),
     )
 )
 # Special case for languages where text is translated like this: 'on {date} wrote {somebody}:'
 RE_ON_DATE_WROTE_SMB = re.compile(
-    u"(-*[>]?[ ]?({0})[ ].*(.*\n){{0,2}}.*({1})[ ]*.*:)".format(
+    r"(-*[>]?[ ]?({0})[ ].*(.*\n){{0,2}}.*({1})[ ]*.*:)".format(
         # Beginning of the line
-        u"|".join(
+        "|".join(
             (
                 "Op",
                 # German
@@ -95,7 +98,7 @@ RE_ON_DATE_WROTE_SMB = re.compile(
             )
         ),
         # Ending of the line
-        u"|".join(
+        "|".join(
             (
                 # Dutch
                 "schreef",
@@ -374,7 +377,7 @@ def process_marked_lines(lines, markers, return_flags=[False, -1, -1]):
 
     if quotation:
         return_flags[:] = True, quotation.start(1), quotation.end(1)
-        return lines[: quotation.start(1)] + lines[quotation.end(1) :]
+        return lines[: quotation.start(1)] + lines[quotation.end(1):]
 
     return_flags[:] = [False, -1, -1]
     return lines
@@ -635,7 +638,7 @@ def remove_namespaces(root):
         # If the tag includes a colon
         idx = child.tag.rfind("U0003A")
         if idx != -1:
-            child.tag = child.tag[idx + 6 :]
+            child.tag = child.tag[idx + 6:]
 
     return root
 

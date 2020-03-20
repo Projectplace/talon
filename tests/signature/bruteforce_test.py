@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import
-from .. import *
-
+from tests import *
 from talon.signature import bruteforce
 
 
@@ -127,7 +125,7 @@ def test_blackberry_signature():
 Sent wirelessly from my BlackBerry device on the Bell network.
 Envoyé sans fil par mon terminal mobile BlackBerry sur le réseau de Bell."""
     eq_(
-        ("Heeyyoooo.", msg_body[len("Heeyyoooo.\n") :]),
+        ("Heeyyoooo.", msg_body[len("Heeyyoooo.\n"):]),
         bruteforce.extract_signature(msg_body),
     )
 

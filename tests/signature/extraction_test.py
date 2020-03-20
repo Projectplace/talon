@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import
 
 import os
-
 from six.moves import range
-
 from talon.signature import bruteforce, extraction, extract
 from talon.signature import extraction as e
 from talon.signature.learning import dataset
-from .. import *
+from tests import *
 
 
 def test_message_shorter_SIGNATURE_MAX_LINES():

@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import
-from . import *
-from .fixtures import *
-
+from tests import *
+from tests.fixtures import *
 import os
-
 import email.iterators
 from talon import quotations
 import six
 from six.moves import range
-from six import StringIO
 
 
 @patch.object(quotations, "MAX_LINES_COUNT", 1)
@@ -467,7 +463,8 @@ def test_swedish_from_line():
             """Lorem
 Den 14 september, 2015 02:23:18, Valentino Rudy (valentino@rudy.be) skrev:
 
-Veniam laborum mlkshk kale chips authentic. Normcore mumblecore laboris, fanny pack readymade eu blog chia pop-up freegan enim master cleanse.
+Veniam laborum mlkshk kale chips authentic. Normcore mumblecore laboris, 
+fanny pack readymade eu blog chia pop-up freegan enim master cleanse.
 """
         ),
     )
@@ -480,7 +477,8 @@ def test_norwegian_from_line():
             u"""Lorem
 På 14 september 2015 på 02:23:18, Valentino Rudy (valentino@rudy.be) skrev:
 
-Veniam laborum mlkshk kale chips authentic. Normcore mumblecore laboris, fanny pack readymade eu blog chia pop-up freegan enim master cleanse.
+Veniam laborum mlkshk kale chips authentic. Normcore mumblecore laboris, 
+fanny pack readymade eu blog chia pop-up freegan enim master cleanse.
 """
         ),
     )
@@ -657,7 +655,7 @@ def test_mark_message_lines():
         "",
         # all 3 next lines should be marked as splitters
         "On Nov 30, 2011, at 12:47 PM, Skapture <",
-        ("416ffd3258d4d2fa4c85cfa4c44e1721d66e3e8f4" "@skapture-staging.mailgun.org>"),
+        "416ffd3258d4d2fa4c85cfa4c44e1721d66e3e8f4" "@skapture-staging.mailgun.org>",
         "wrote:",
         "",
         "Tarmo Lehtpuu has posted the following message on",
@@ -669,7 +667,6 @@ def test_process_marked_lines():
     # quotations and last message lines are mixed
     # consider all to be a last message
     markers = "tsemmtetm"
-    lines = [str(i) for i in range(len(markers))]
     lines = [str(i) for i in range(len(markers))]
 
     eq_(lines, quotations.process_marked_lines(lines, markers))

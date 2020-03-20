@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import
-
 import logging
-
 import numpy
 import regex as re
 from talon.signature.bruteforce import get_signature_candidate
@@ -59,11 +56,12 @@ def extract(body, sender):
             if signature:
                 text = delimiter.join(text)
                 if text.strip():
-                    return (text, delimiter.join(signature))
+                    return text, delimiter.join(signature)
     except Exception as e:
         log.exception("ERROR when extracting signature with classifiers")
+        log.exception(e)
 
-    return (body, None)
+    return body, None
 
 
 def _mark_lines(lines, sender):
@@ -110,6 +108,6 @@ def _process_marked_lines(lines, markers):
     # reverse lines and match signature pattern for reversed lines
     signature = RE_REVERSE_SIGNATURE.match(markers[::-1])
     if signature:
-        return (lines[: -signature.end()], lines[-signature.end() :])
+        return lines[: -signature.end()], lines[-signature.end():]
 
-    return (lines, None)
+    return lines, None

@@ -5,51 +5,42 @@
 * regexp's constants used when evaluating signature's features
 
 """
-
-from __future__ import absolute_import
 import unicodedata
 import regex as re
-
 from talon.utils import to_unicode
-
 from talon.signature.constants import SIGNATURE_MAX_LINES
 
 
-rc = re.compile
-
-RE_EMAIL = rc("\S@\S")
-RE_RELAX_PHONE = rc("(\(? ?[\d]{2,3} ?\)?.{,3}?){2,}")
-RE_URL = rc(r"""https?://|www\.[\S]+\.[\S]""")
+RE_EMAIL = re.compile(r"\S@\S")
+RE_RELAX_PHONE = re.compile(r"(\(? ?[\d]{2,3} ?\)?.{,3}?){2,}")
+RE_URL = re.compile(r"""https?://|www\.[\S]+\.[\S]""")
 
 # Taken from:
 # http://www.cs.cmu.edu/~vitor/papers/sigFilePaper_finalversion.pdf
 # Line matches the regular expression "^[\s]*---*[\s]*$".
-RE_SEPARATOR = rc("^[\s]*---*[\s]*$")
+RE_SEPARATOR = re.compile(r"^[\s]*---*[\s]*$")
 
 # Taken from:
 # http://www.cs.cmu.edu/~vitor/papers/sigFilePaper_finalversion.pdf
 # Line has a sequence of 10 or more special characters.
-RE_SPECIAL_CHARS = rc(
+RE_SPECIAL_CHARS = re.compile(
     (
-        "^[\s]*([\*]|#|[\+]|[\^]|-|[\~]|[\&]|[\$]|_|[\!]|"
-        "[\/]|[\%]|[\:]|[\=]){10,}[\s]*$"
+        r"^[\s]*([\*]|#|[\+]|[\^]|-|[\~]|[\&]|[\$]|_|[\!]|[\/]|[\%]|[\:]|[\=]){10,}[\s]*$"
     )
 )
 
-RE_SIGNATURE_WORDS = rc(
+RE_SIGNATURE_WORDS = re.compile(
     (
-        "(T|t)hank.*,|(B|b)est|(R|r)egards|"
-        "^sent[ ]{1}from[ ]{1}my[\s,!\w]*$|BR|(S|s)incerely|"
-        "(C|c)orporation|Group"
+        r"(T|t)hank.*,|(B|b)est|(R|r)egards|^sent[ ]{1}from[ ]{1}my[\s,!\w]*$|BR|(S|s)incerely|(C|c)orporation|Group"
     )
 )
 
 # Taken from:
 # http://www.cs.cmu.edu/~vitor/papers/sigFilePaper_finalversion.pdf
 # Line contains a pattern like Vitor R. Carvalho or William W. Cohen.
-RE_NAME = rc("[A-Z][a-z]+\s\s?[A-Z][\.]?\s\s?[A-Z][a-z]+")
+RE_NAME = re.compile(r"[A-Z][a-z]+\s\s?[A-Z][\.]?\s\s?[A-Z][a-z]+")
 
-INVALID_WORD_START = rc("\(|\+|[\d]")
+INVALID_WORD_START = re.compile(r"\(|\+|[\d]")
 
 BAD_SENDER_NAMES = [
     # known mail domains
@@ -161,7 +152,7 @@ def extract_names(sender):
     sender = [
         word
         for word in sender.split()
-        if len(word) > 1 and not word in BAD_SENDER_NAMES
+        if len(word) > 1 and word not in BAD_SENDER_NAMES
     ]
     # Remove duplicates
     names = list(set(sender))
@@ -204,7 +195,7 @@ def punctuation_percent(s):
 def capitalized_words_percent(s):
     """Returns capitalized words percent."""
     s = to_unicode(s, precise=True)
-    words = re.split("\s", s)
+    words = re.split(r"\s", s)
     words = [w for w in words if w.strip()]
     words = [w for w in words if len(w) > 2]
     capitalized_words_counter = 0

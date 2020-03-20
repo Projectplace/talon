@@ -1,5 +1,7 @@
-from __future__ import absolute_import
-from setuptools import setup, find_packages
+from setuptools import (
+    setup,
+    find_packages
+)
 from setuptools.command.install import install
 
 
@@ -19,7 +21,7 @@ class InstallCommand(install):
         if self.no_ml:
             dist = self.distribution
             dist.packages = find_packages(
-                exclude=["tests", "tests.*", "talon.signature", "talon.signature.*",]
+                exclude=["tests", "tests.*", "talon.signature", "talon.signature.*", ]
             )
             for not_required in ["numpy", "scipy", "scikit-learn==0.16.1"]:
                 dist.install_requires.remove(not_required)
@@ -28,13 +30,13 @@ class InstallCommand(install):
 setup(
     name="talon",
     version="1.4.8",
-    description=("Mailgun library " "to extract message quotations and signatures."),
+    description="Mailgun library " "to extract message quotations and signatures.",
     long_description=open("README.rst").read(),
     author="Mailgun Inc.",
     author_email="admin@mailgunhq.com",
     url="https://github.com/mailgun/talon",
     license="APACHE2",
-    cmdclass={"install": InstallCommand,},
+    cmdclass={"install": InstallCommand, },
     packages=find_packages(exclude=["tests", "tests.*"]),
     include_package_data=True,
     zip_safe=True,

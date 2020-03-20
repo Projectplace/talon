@@ -87,7 +87,6 @@ def extract_signature(msg_body):
 
         # make an assumption
         stripped_body = msg_body.strip()
-        phone_signature = None
 
         # strip off phone signature
         phone_signature = RE_PHONE_SIGNATURE.search(msg_body)
@@ -103,7 +102,7 @@ def extract_signature(msg_body):
         # try to extract signature
         signature = RE_SIGNATURE.search(candidate)
         if not signature:
-            return (stripped_body.strip(), phone_signature)
+            return stripped_body.strip(), phone_signature
         else:
             signature = signature.group()
             # when we splitlines() and then join them
@@ -116,10 +115,10 @@ def extract_signature(msg_body):
             if phone_signature:
                 signature = delimiter.join([signature, phone_signature])
 
-            return (stripped_body.strip(), signature.strip())
+            return stripped_body.strip(), signature.strip()
     except Exception:
         log.exception("ERROR extracting signature")
-        return (msg_body, None)
+        return msg_body, None
 
 
 def get_signature_candidate(lines):
@@ -149,7 +148,7 @@ def get_signature_candidate(lines):
 
     # get actual lines for the candidate instead of indexes
     if candidate:
-        candidate = lines[candidate[0] :]
+        candidate = lines[candidate[0]:]
         return candidate
 
     return []
@@ -191,4 +190,4 @@ def _process_marked_candidate_indexes(candidate, markers):
     [15, 17]
     """
     match = RE_SIGNATURE_CANDIDATE.match(markers[::-1])
-    return candidate[-match.end("candidate") :] if match else []
+    return candidate[-match.end("candidate"):] if match else []

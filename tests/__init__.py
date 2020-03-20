@@ -1,7 +1,6 @@
 from __future__ import absolute_import
 from nose.tools import *
 from unittest.mock import *
-
 import talon
 
 

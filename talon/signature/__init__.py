@@ -20,12 +20,10 @@ trained against, don't forget to regenerate:
 * signature/data/classifier
 """
 
-from __future__ import absolute_import
 import os
-
-from . import extraction
-from .extraction import extract  # noqa
-from .learning import classifier
+from talon.signature.extraction import extract # noqa
+from talon.signature import extraction
+from talon.signature.learning import classifier
 
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), "data")

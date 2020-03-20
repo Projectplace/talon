@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import
-from ... import *
-
+from tests import *
 from talon.signature.learning import featurespace as fs
 
 

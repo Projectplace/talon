@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import
-from . import *
-from .fixtures import *
-
+from tests import *
+from tests.fixtures import *
 from talon import quotations
 
 
