@@ -34,6 +34,7 @@ def load(saved_classifier_filename, train_data_filename):
         return joblib.load(saved_classifier_filename)
     except Exception:
         import sys
+
         if sys.version_info > (3, 0):
             return load_compat(saved_classifier_filename)
 
@@ -50,8 +51,8 @@ def load_compat(saved_classifier_filename):
     os.chdir(os.path.dirname(saved_classifier_filename))
 
     # convert encoding using pick.load and write to temp file which we'll tell joblib to use
-    pickle_file = open(saved_classifier_filename, 'rb')
-    classifier = pickle.load(pickle_file, encoding='latin1')
+    pickle_file = open(saved_classifier_filename, "rb")
+    classifier = pickle.load(pickle_file, encoding="latin1")
 
     try:
         # save our conversion if permissions allow
