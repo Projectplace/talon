@@ -21,7 +21,7 @@ trained against, don't forget to regenerate:
 """
 
 import os
-from talon.signature.extraction import extract # noqa
+from talon.signature.extraction import extract  # noqa
 from talon.signature import extraction
 from talon.signature.learning import classifier
 

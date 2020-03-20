@@ -7,15 +7,8 @@ original messages (without quoted messages)
 import regex as re
 import logging
 from copy import deepcopy
-from lxml import (
-    html,
-    etree
-)
-from talon.utils import (
-    get_delimiter,
-    html_tree_to_text,
-    html_document_fromstring
-)
+from lxml import html, etree
+from talon.utils import get_delimiter, html_tree_to_text, html_document_fromstring
 from talon import html_quotations
 from six.moves import range
 import six
@@ -239,9 +232,7 @@ SPLITTER_PATTERNS = [
     # bob@example.com>:
     re.compile(r"\d{4}-\d{2}-\d{2}\s+\d{2}:\d{2}\s+GMT.*\s\S+@\S+", re.S),
     # Thu, 26 Jun 2014 14:00:51 +0400 Bob <bob@example.com>:
-    re.compile(
-        r"\S{3,10}, \d\d? \S{3,10} 20\d\d,? \d\d?:\d\d(:\d\d)?" r"( \S+){3,6}@\S+:"
-    ),
+    re.compile(r"\S{3,10}, \d\d? \S{3,10} 20\d\d,? \d\d?:\d\d(:\d\d)?" r"( \S+){3,6}@\S+:"),
     # Sent from Samsung MobileName <address@example.com> wrote:
     re.compile(r"Sent from Samsung.* \S+@\S+> wrote"),
     RE_ANDROID_WROTE,
@@ -315,7 +306,7 @@ def mark_message_lines(lines):
             markers[i] = "f"  # ---- Forwarded message ----
         else:
             # in case splitter is spread across several lines
-            splitter = is_splitter("\n".join(lines[i: i + SPLITTER_MAX_LINES]))
+            splitter = is_splitter("\n".join(lines[i : i + SPLITTER_MAX_LINES]))
 
             if splitter:
                 # append as many splitter markers as lines in splitter
@@ -359,9 +350,9 @@ def process_marked_lines(lines, markers, return_flags=[False, -1, -1]):
     for inline_reply in re.finditer("(?<=m)e*(t[te]*)m", markers):
         # long links could break sequence of quotation lines but they shouldn't
         # be considered an inline reply
-        links = RE_PARENTHESIS_LINK.search(
-            lines[inline_reply.start() - 1]
-        ) or RE_PARENTHESIS_LINK.match(lines[inline_reply.start()].strip())
+        links = RE_PARENTHESIS_LINK.search(lines[inline_reply.start() - 1]) or RE_PARENTHESIS_LINK.match(
+            lines[inline_reply.start()].strip()
+        )
         if not links:
             return_flags[:] = [False, -1, -1]
             return lines
@@ -377,7 +368,7 @@ def process_marked_lines(lines, markers, return_flags=[False, -1, -1]):
 
     if quotation:
         return_flags[:] = True, quotation.start(1), quotation.end(1)
-        return lines[: quotation.start(1)] + lines[quotation.end(1):]
+        return lines[: quotation.start(1)] + lines[quotation.end(1) :]
 
     return_flags[:] = [False, -1, -1]
     return lines
@@ -549,10 +540,7 @@ def _extract_from_html(msg_body):
 
     # Collect checkpoints on each line
     line_checkpoints = [
-        [
-            int(i[4:-4])  # Only checkpoint number
-            for i in re.findall(html_quotations.CHECKPOINT_PATTERN, line)
-        ]
+        [int(i[4:-4]) for i in re.findall(html_quotations.CHECKPOINT_PATTERN, line)]  # Only checkpoint number
         for line in lines
     ]
 
@@ -638,7 +626,7 @@ def remove_namespaces(root):
         # If the tag includes a colon
         idx = child.tag.rfind("U0003A")
         if idx != -1:
-            child.tag = child.tag[idx + 6:]
+            child.tag = child.tag[idx + 6 :]
 
     return root
 

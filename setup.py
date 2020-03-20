@@ -1,7 +1,4 @@
-from setuptools import (
-    setup,
-    find_packages
-)
+from setuptools import setup, find_packages
 from setuptools.command.install import install
 
 
@@ -20,9 +17,7 @@ class InstallCommand(install):
         install.finalize_options(self)
         if self.no_ml:
             dist = self.distribution
-            dist.packages = find_packages(
-                exclude=["tests", "tests.*", "talon.signature", "talon.signature.*", ]
-            )
+            dist.packages = find_packages(exclude=["tests", "tests.*", "talon.signature", "talon.signature.*",])
             for not_required in ["numpy", "scipy", "scikit-learn==0.16.1"]:
                 dist.install_requires.remove(not_required)
 
@@ -36,7 +31,7 @@ setup(
     author_email="admin@mailgunhq.com",
     url="https://github.com/mailgun/talon",
     license="APACHE2",
-    cmdclass={"install": InstallCommand, },
+    cmdclass={"install": InstallCommand,},
     packages=find_packages(exclude=["tests", "tests.*"]),
     include_package_data=True,
     zip_safe=True,

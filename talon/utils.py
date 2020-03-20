@@ -98,9 +98,7 @@ def to_utf8(str_or_unicode):
 
 
 def random_token(length=7):
-    vals = (
-        "a b c d e f g h i j k l m n o p q r s t u v w x y z " "0 1 2 3 4 5 6 7 8 9"
-    ).split(" ")
+    vals = ("a b c d e f g h i j k l m n o p q r s t u v w x y z " "0 1 2 3 4 5 6 7 8 9").split(" ")
     shuffle(vals)
     return "".join(vals[:length])
 
@@ -251,9 +249,7 @@ def _html5lib_parser():
     )
 
 
-_UTF8_DECLARATION = (
-    b'<meta http-equiv="Content-Type" content="text/html;' b'charset=utf-8">'
-)
+_UTF8_DECLARATION = b'<meta http-equiv="Content-Type" content="text/html;' b'charset=utf-8">'
 
 _BLOCKTAGS = ["div", "p", "ul", "li", "h1", "h2", "h3"]
 _HARDBREAKS = ["br", "hr", "tr"]

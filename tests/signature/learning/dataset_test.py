@@ -33,9 +33,7 @@ def test_parse_msg_sender():
 def test_build_extraction_dataset():
     if os.path.exists(os.path.join(TMP_DIR, "extraction.data")):
         os.remove(os.path.join(TMP_DIR, "extraction.data"))
-    d.build_extraction_dataset(
-        os.path.join(EMAILS_DIR, "P"), os.path.join(TMP_DIR, "extraction.data"), 1
-    )
+    d.build_extraction_dataset(os.path.join(EMAILS_DIR, "P"), os.path.join(TMP_DIR, "extraction.data"), 1)
 
     filename = os.path.join(TMP_DIR, "extraction.data")
     file_data = genfromtxt(filename, delimiter=",")

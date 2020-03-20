@@ -1,11 +1,5 @@
-from talon.signature import (
-    EXTRACTOR_FILENAME,
-    EXTRACTOR_DATA
-)
-from talon.signature.learning.classifier import (
-    train,
-    init
-)
+from talon.signature import EXTRACTOR_FILENAME, EXTRACTOR_DATA
+from talon.signature.learning.classifier import train, init
 
 
 def train_model():

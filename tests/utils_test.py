@@ -26,10 +26,7 @@ def test_unicode():
 
 def test_detect_encoding():
     eq_("ascii", u.detect_encoding(b"qwe").lower())
-    ok_(
-        u.detect_encoding(u"Versi\xf3n".encode("iso-8859-2")).lower()
-        in ["iso-8859-1", "iso-8859-2"]
-    )
+    ok_(u.detect_encoding(u"Versi\xf3n".encode("iso-8859-2")).lower() in ["iso-8859-1", "iso-8859-2"])
     eq_("utf-8", u.detect_encoding(u"привет".encode("utf8")).lower())
     # fallback to utf-8
     with patch.object(u.chardet, "detect") as detect:
@@ -39,10 +36,7 @@ def test_detect_encoding():
 
 def test_quick_detect_encoding():
     eq_("ascii", u.quick_detect_encoding(b"qwe").lower())
-    ok_(
-        u.quick_detect_encoding(u"Versi\xf3n".encode("windows-1252")).lower()
-        in ["windows-1252", "windows-1250"]
-    )
+    ok_(u.quick_detect_encoding(u"Versi\xf3n".encode("windows-1252")).lower() in ["windows-1252", "windows-1250"])
     eq_("utf-8", u.quick_detect_encoding(u"привет".encode("utf8")).lower())
 
 

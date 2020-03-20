@@ -71,9 +71,7 @@ Sent from my iPhone!"""
 def test_mailbox_for_iphone_signature():
     msg_body = """Blah
 Sent from Mailbox for iPhone"""
-    eq_(
-        ("Blah", "Sent from Mailbox for iPhone"), bruteforce.extract_signature(msg_body)
-    )
+    eq_(("Blah", "Sent from Mailbox for iPhone"), bruteforce.extract_signature(msg_body))
 
 
 def test_line_starts_with_signature_word():
@@ -83,8 +81,7 @@ Thanks for your attention.
 Thanks!
 Roman"""
     eq_(
-        ("Hey man!\nThanks for your attention.", "--\nThanks!\nRoman"),
-        bruteforce.extract_signature(msg_body),
+        ("Hey man!\nThanks for your attention.", "--\nThanks!\nRoman"), bruteforce.extract_signature(msg_body),
     )
 
 
@@ -97,8 +94,7 @@ Look at this:
 --
 Roman"""
     eq_(
-        ("Hey man!\nLook at this:\n\n--> one\n--> two", "--\nRoman"),
-        bruteforce.extract_signature(msg_body),
+        ("Hey man!\nLook at this:\n\n--> one\n--> two", "--\nRoman"), bruteforce.extract_signature(msg_body),
     )
 
 
@@ -109,8 +105,7 @@ def test_blank_lines_inside_signature():
 
 Sent from my HTC smartphone!"""
     eq_(
-        ("Blah.", "-Lev.\n\nSent from my HTC smartphone!"),
-        bruteforce.extract_signature(msg_body),
+        ("Blah.", "-Lev.\n\nSent from my HTC smartphone!"), bruteforce.extract_signature(msg_body),
     )
 
     msg_body = """Blah
@@ -125,16 +120,14 @@ def test_blackberry_signature():
 Sent wirelessly from my BlackBerry device on the Bell network.
 Envoyé sans fil par mon terminal mobile BlackBerry sur le réseau de Bell."""
     eq_(
-        ("Heeyyoooo.", msg_body[len("Heeyyoooo.\n"):]),
-        bruteforce.extract_signature(msg_body),
+        ("Heeyyoooo.", msg_body[len("Heeyyoooo.\n") :]), bruteforce.extract_signature(msg_body),
     )
 
     msg_body = u"""Blah
 Enviado desde mi oficina mÃ³vil BlackBerryÂ® de Telcel"""
 
     eq_(
-        ("Blah", u"Enviado desde mi oficina mÃ³vil BlackBerryÂ® de Telcel"),
-        bruteforce.extract_signature(msg_body),
+        ("Blah", u"Enviado desde mi oficina mÃ³vil BlackBerryÂ® de Telcel"), bruteforce.extract_signature(msg_body),
     )
 
 
@@ -154,8 +147,7 @@ regards
 
 John Doe"""
     eq_(
-        ("Thanks,\n\nBlah", "regards\n\nJohn Doe"),
-        bruteforce.extract_signature(msg_body),
+        ("Thanks,\n\nBlah", "regards\n\nJohn Doe"), bruteforce.extract_signature(msg_body),
     )
 
 
@@ -169,8 +161,7 @@ regards
 
 John Doe"""
     eq_(
-        ("Thanks,\nBlah", "regards\n\n\nJohn Doe"),
-        bruteforce.extract_signature(msg_body),
+        ("Thanks,\nBlah", "regards\n\n\nJohn Doe"), bruteforce.extract_signature(msg_body),
     )
 
 
@@ -207,17 +198,13 @@ def test_mark_candidate_indexes():
     with patch.object(bruteforce, "TOO_LONG_SIGNATURE_LINE", 3):
         # spaces are not considered when checking line length
         eq_(
-            "clc",
-            bruteforce._mark_candidate_indexes(["BR,  ", "long", "Bob"], [0, 1, 2]),
+            "clc", bruteforce._mark_candidate_indexes(["BR,  ", "long", "Bob"], [0, 1, 2]),
         )
 
         # only candidate lines are marked
         # if line has only dashes it's a candidate line
         eq_(
-            "ccdc",
-            bruteforce._mark_candidate_indexes(
-                ["-", "long", "-", "- i", "Bob"], [0, 2, 3, 4]
-            ),
+            "ccdc", bruteforce._mark_candidate_indexes(["-", "long", "-", "- i", "Bob"], [0, 2, 3, 4]),
         )
 
 

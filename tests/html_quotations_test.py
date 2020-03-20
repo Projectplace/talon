@@ -29,8 +29,7 @@ def test_quotation_splitter_inside_blockquote():
 </blockquote>"""
 
     eq_(
-        "<html><head></head><body>Reply</body></html>",
-        RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
+        "<html><head></head><body>Reply</body></html>", RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
     )
 
 
@@ -48,8 +47,7 @@ def test_quotation_splitter_outside_blockquote():
 </blockquote>
 """
     eq_(
-        "<html><head></head><body>Reply</body></html>",
-        RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
+        "<html><head></head><body>Reply</body></html>", RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
     )
 
 
@@ -98,8 +96,7 @@ Reply
 
 </body></html>"""
     eq_(
-        RE_WHITESPACE.sub("", reply),
-        RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
+        RE_WHITESPACE.sub("", reply), RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
     )
 
 
@@ -123,8 +120,7 @@ def test_validate_output_html():
 """
     out = quotations.extract_from_html(msg_body)
     ok_(
-        "<html>" in out and "</html>" in out,
-        "Invalid HTML - <html>/</html> tag not present",
+        "<html>" in out and "</html>" in out, "Invalid HTML - <html>/</html> tag not present",
     )
     ok_("<div/>" not in out, "Invalid HTML output - <div/> element is not valid")
 
@@ -140,8 +136,7 @@ def test_gmail_quote():
   </div>
 </div>"""
     eq_(
-        "<html><head></head><body>Reply</body></html>",
-        RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
+        "<html><head></head><body>Reply</body></html>", RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
     )
 
 
@@ -155,8 +150,7 @@ def test_gmail_quote_compact():
         "</div>"
     )
     eq_(
-        "<html><head></head><body>Reply</body></html>",
-        RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
+        "<html><head></head><body>Reply</body></html>", RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
     )
 
 
@@ -169,8 +163,7 @@ def test_gmail_quote_blockquote():
   </div>
 </blockquote>"""
     eq_(
-        RE_WHITESPACE.sub("", msg_body),
-        RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
+        RE_WHITESPACE.sub("", msg_body), RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
     )
 
 
@@ -188,8 +181,7 @@ def test_unicode_in_reply():
     )
 
     eq_(
-        "<html><head></head><body>Reply&#160;&#160;Text<br><div><br></div>"
-        "</body></html>",
+        "<html><head></head><body>Reply&#160;&#160;Text<br><div><br></div>" "</body></html>",
         RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
     )
 
@@ -229,8 +221,7 @@ def test_blockquote_disclaimer():
 </html>
 """
     eq_(
-        RE_WHITESPACE.sub("", stripped_html),
-        RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
+        RE_WHITESPACE.sub("", stripped_html), RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
     )
 
 
@@ -351,8 +342,7 @@ def extract_reply_and_check(filename):
     plain_reply = plain_reply.decode("utf8")
 
     eq_(
-        RE_WHITESPACE.sub("", "Hi. I am fine.\n\nThanks,\nAlex"),
-        RE_WHITESPACE.sub("", plain_reply),
+        RE_WHITESPACE.sub("", "Hi. I am fine.\n\nThanks,\nAlex"), RE_WHITESPACE.sub("", plain_reply),
     )
 
 
@@ -438,8 +428,7 @@ def test_too_large_html():
         "</div>"
     )
     eq_(
-        RE_WHITESPACE.sub("", msg_body),
-        RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
+        RE_WHITESPACE.sub("", msg_body), RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
     )
 
 
@@ -458,8 +447,7 @@ def test_readable_html_empty():
 </blockquote>"""
 
     eq_(
-        RE_WHITESPACE.sub("", msg_body),
-        RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
+        RE_WHITESPACE.sub("", msg_body), RE_WHITESPACE.sub("", quotations.extract_from_html(msg_body)),
     )
 
 

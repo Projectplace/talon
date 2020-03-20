@@ -60,11 +60,7 @@ def apply_features(body, features):
     last_lines = lines[-SIGNATURE_MAX_LINES:]
 
     # apply features, fallback to zeros
-    return [[
-        f(line) for f in features
-    ] for line in last_lines] or [[
-        0 for f in features
-    ]]
+    return [[f(line) for f in features] for line in last_lines] or [[0 for f in features]]
 
 
 def build_pattern(body, features):

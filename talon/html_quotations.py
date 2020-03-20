@@ -21,9 +21,7 @@ def add_checkpoint(html_note, counter):
     """Recursively adds checkpoints to html tree.
     """
     if html_note.text:
-        html_note.text = (
-            html_note.text + CHECKPOINT_PREFIX + str(counter) + CHECKPOINT_SUFFIX
-        )
+        html_note.text = html_note.text + CHECKPOINT_PREFIX + str(counter) + CHECKPOINT_SUFFIX
     else:
         html_note.text = CHECKPOINT_PREFIX + str(counter) + CHECKPOINT_SUFFIX
     counter += 1
@@ -32,9 +30,7 @@ def add_checkpoint(html_note, counter):
         counter = add_checkpoint(child, counter)
 
     if html_note.tail:
-        html_note.tail = (
-            html_note.tail + CHECKPOINT_PREFIX + str(counter) + CHECKPOINT_SUFFIX
-        )
+        html_note.tail = html_note.tail + CHECKPOINT_PREFIX + str(counter) + CHECKPOINT_SUFFIX
     else:
         html_note.tail = CHECKPOINT_PREFIX + str(counter) + CHECKPOINT_SUFFIX
     counter += 1
@@ -55,9 +51,7 @@ def delete_quotation_tags(html_note, counter, quotation_checkpoints):
 
     quotation_children = []  # Children tags which are in quotation.
     for child in html_note.iterchildren():
-        counter, child_tag_in_quotation = delete_quotation_tags(
-            child, counter, quotation_checkpoints
-        )
+        counter, child_tag_in_quotation = delete_quotation_tags(child, counter, quotation_checkpoints)
         if child_tag_in_quotation:
             quotation_children.append(child)
 
@@ -79,9 +73,7 @@ def delete_quotation_tags(html_note, counter, quotation_checkpoints):
 def cut_gmail_quote(html_message):
     """ Cuts the outermost block element with class gmail_quote. """
     gmail_quote = cssselect("div.gmail_quote", html_message)
-    if gmail_quote and (
-        gmail_quote[0].text is None or not RE_FWD.match(gmail_quote[0].text)
-    ):
+    if gmail_quote and (gmail_quote[0].text is None or not RE_FWD.match(gmail_quote[0].text)):
         gmail_quote[0].getparent().remove(gmail_quote[0])
         return True
 
@@ -153,11 +145,7 @@ def cut_by_id(html_message):
 
 def cut_blockquote(html_message):
     """ Cuts the last non-nested blockquote with wrapping elements."""
-    quote = html_message.xpath(
-        "(.//blockquote)"
-        '[not(@class="gmail_quote") and not(ancestor::blockquote)]'
-        "[last()]"
-    )
+    quote = html_message.xpath("(.//blockquote)" '[not(@class="gmail_quote") and not(ancestor::blockquote)]' "[last()]")
 
     if quote:
         quote = quote[0]
@@ -169,10 +157,7 @@ def cut_from_block(html_message):
     """Cuts div tag which wraps block starting with "From:"."""
     # handle the case when From: block is enclosed in some tag
     block = html_message.xpath(
-        (
-            "//*[starts-with(mg:text_content(), 'From:')]|"
-            "//*[starts-with(mg:text_content(), 'Date:')]"
-        )
+        ("//*[starts-with(mg:text_content(), 'From:')]|" "//*[starts-with(mg:text_content(), 'Date:')]")
     )
 
     if block:
@@ -188,9 +173,7 @@ def cut_from_block(html_message):
             # In cases where removing this enclosing div will remove all
             # content, we should assume the quote is not enclosed in a tag.
             parent_div_is_all_content = (
-                maybe_body is not None
-                and maybe_body.tag == "body"
-                and len(maybe_body.getchildren()) == 1
+                maybe_body is not None and maybe_body.tag == "body" and len(maybe_body.getchildren()) == 1
             )
 
             if not parent_div_is_all_content:
@@ -215,9 +198,7 @@ def cut_from_block(html_message):
 
     # handle the case when From: block goes right after e.g. <hr>
     # and not enclosed in some tag
-    block = html_message.xpath(
-        "//*[starts-with(mg:tail(), 'From:')]|" "//*[starts-with(mg:tail(), 'Date:')]"
-    )
+    block = html_message.xpath("//*[starts-with(mg:tail(), 'From:')]|" "//*[starts-with(mg:tail(), 'Date:')]")
     if block:
         block = block[0]
 

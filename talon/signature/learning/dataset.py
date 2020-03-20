@@ -150,9 +150,9 @@ def build_extraction_dataset(folder, dataset_filename, sender_known=True):
                 label = -1
                 if line[: len(SIGNATURE_ANNOTATION)] == SIGNATURE_ANNOTATION:
                     label = 1
-                    line = line[len(SIGNATURE_ANNOTATION):]
+                    line = line[len(SIGNATURE_ANNOTATION) :]
                 elif line[: len(REPLY_ANNOTATION)] == REPLY_ANNOTATION:
-                    line = line[len(REPLY_ANNOTATION):]
+                    line = line[len(REPLY_ANNOTATION) :]
 
                 x = build_pattern(line, features(sender))
                 x.append(label)

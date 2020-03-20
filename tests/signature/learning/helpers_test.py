@@ -67,9 +67,7 @@ def test_flatten_list():
 
 @patch.object(h.re, "compile")
 def test_contains_sender_names(re_compile):
-    with patch.object(
-        h, "extract_names", Mock(return_value=["bob", "smith"])
-    ) as extract_names:
+    with patch.object(h, "extract_names", Mock(return_value=["bob", "smith"])) as extract_names:
         has_sender_names = h.contains_sender_names("bob.smith@example.com")
         extract_names.assert_called_with("bob.smith@example.com")
         for name in ["bob", "Bob", "smith", "Smith"]:
@@ -94,11 +92,7 @@ def test_extract_names():
             "+20+3CeCenter+40example+2Ecom+3E+40EXAMPLE@EXAMPLE.com>"
         ): ["Jay", "Rickerts"],
         # if `,` is used in sender's name
-        "Williams III, Bill </O=EXAMPLE/OU=NA/CN=RECIPIENTS/CN=BWILLIA5>": [
-            "Williams",
-            "III",
-            "Bill",
-        ],
+        "Williams III, Bill </O=EXAMPLE/OU=NA/CN=RECIPIENTS/CN=BWILLIA5>": ["Williams", "III", "Bill",],
         # if somehow `'` or `"` are used in sender's name
         'Laura" "Goldberg <laura.goldberg@example.com>': ["Laura", "Goldberg"],
         # extract from senders email address
@@ -137,24 +131,11 @@ def test_extract_names():
         '"**Bobby B**" <copymycashsystem@example.com>': ["Bobby", "copymycashsystem"],
         # from crash reports `bad escape`
         r'"M Ali B Azlan \(GHSE/PETH\)" <aliazlan@example.com>': ["Ali", "Azlan"],
-        r'"Ridthauddin B A Rahim \(DD/PCSB\)"' " <ridthauddin_arahim@example.com>": [
-            "Ridthauddin",
-            "Rahim",
-        ],
-        (
-            r'"Boland, Patrick \(Global Xxx Group, Ireland \)"'
-            " <Patrick.Boland@example.com>"
-        ): ["Boland", "Patrick"],
+        r'"Ridthauddin B A Rahim \(DD/PCSB\)"' " <ridthauddin_arahim@example.com>": ["Ridthauddin", "Rahim",],
+        (r'"Boland, Patrick \(Global Xxx Group, Ireland \)"' " <Patrick.Boland@example.com>"): ["Boland", "Patrick"],
         r'"Mates Rate \(Wine\)" <amen@example.com.com>': ["Mates", "Rate", "Wine"],
-        (
-            r'"Morgan, Paul \(Business Xxx RI, Xxx Xxx Group\)"'
-            " <paul.morgan@example.com>"
-        ): ["Morgan", "Paul"],
-        r'"David DECOSTER \(Domicile\)" <decosterdavid@xxx.be>': [
-            "David",
-            "DECOSTER",
-            "Domicile",
-        ],
+        (r'"Morgan, Paul \(Business Xxx RI, Xxx Xxx Group\)"' " <paul.morgan@example.com>"): ["Morgan", "Paul"],
+        r'"David DECOSTER \(Domicile\)" <decosterdavid@xxx.be>': ["David", "DECOSTER", "Domicile",],
     }
 
     for sender, expected_names in senders_names.items():
@@ -164,10 +145,7 @@ def test_extract_names():
             re.compile("|".join(extracted_names))
         except Exception as e:
             ok_(
-                False,
-                "Failed to compile extracted names {}" "\n\nReason: {}".format(
-                    extracted_names, e
-                ),
+                False, "Failed to compile extracted names {}" "\n\nReason: {}".format(extracted_names, e),
             )
         if expected_names:
             for name in expected_names:
@@ -212,14 +190,8 @@ def test_capitalized_words_percent():
 def test_has_signature():
     ok_(h.has_signature("sender", "sender@example.com"))
     ok_(h.has_signature("http://www.example.com\n555 555 5555", "sender@example.com"))
-    ok_(
-        h.has_signature(
-            "http://www.example.com\naddress@example.com", "sender@example.com"
-        )
-    )
-    assert_false(
-        h.has_signature("http://www.example.com/555-555-5555", "sender@example.com")
-    )
+    ok_(h.has_signature("http://www.example.com\naddress@example.com", "sender@example.com"))
+    assert_false(h.has_signature("http://www.example.com/555-555-5555", "sender@example.com"))
     long_line = "".join(["q" for e in range(28)])
     assert_false(h.has_signature(long_line + " sender", "sender@example.com"))
     # wont crash on an empty string

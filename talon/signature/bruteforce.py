@@ -148,7 +148,7 @@ def get_signature_candidate(lines):
 
     # get actual lines for the candidate instead of indexes
     if candidate:
-        candidate = lines[candidate[0]:]
+        candidate = lines[candidate[0] :]
         return candidate
 
     return []
@@ -190,4 +190,4 @@ def _process_marked_candidate_indexes(candidate, markers):
     [15, 17]
     """
     match = RE_SIGNATURE_CANDIDATE.match(markers[::-1])
-    return candidate[-match.end("candidate"):] if match else []
+    return candidate[-match.end("candidate") :] if match else []

@@ -23,16 +23,10 @@ RE_SEPARATOR = re.compile(r"^[\s]*---*[\s]*$")
 # Taken from:
 # http://www.cs.cmu.edu/~vitor/papers/sigFilePaper_finalversion.pdf
 # Line has a sequence of 10 or more special characters.
-RE_SPECIAL_CHARS = re.compile(
-    (
-        r"^[\s]*([\*]|#|[\+]|[\^]|-|[\~]|[\&]|[\$]|_|[\!]|[\/]|[\%]|[\:]|[\=]){10,}[\s]*$"
-    )
-)
+RE_SPECIAL_CHARS = re.compile((r"^[\s]*([\*]|#|[\+]|[\^]|-|[\~]|[\&]|[\$]|_|[\!]|[\/]|[\%]|[\:]|[\=]){10,}[\s]*$"))
 
 RE_SIGNATURE_WORDS = re.compile(
-    (
-        r"(T|t)hank.*,|(B|b)est|(R|r)egards|^sent[ ]{1}from[ ]{1}my[\s,!\w]*$|BR|(S|s)incerely|(C|c)orporation|Group"
-    )
+    (r"(T|t)hank.*,|(B|b)est|(R|r)egards|^sent[ ]{1}from[ ]{1}my[\s,!\w]*$|BR|(S|s)incerely|(C|c)orporation|Group")
 )
 
 # Taken from:
@@ -124,9 +118,7 @@ def contains_sender_names(sender):
     >>> contains_sender_names("<serobnic@mail.ru>")("serobnic")
     1
     """
-    names = "( |$)|".join(
-        flatten_list([[e, e.capitalize()] for e in extract_names(sender)])
-    )
+    names = "( |$)|".join(flatten_list([[e, e.capitalize()] for e in extract_names(sender)]))
     names = names or sender
     if names != "":
         return binary_regex_search(re.compile(names))
@@ -149,11 +141,7 @@ def extract_names(sender):
     sender = "".join([char if char.isalpha() else " " for char in sender])
     # Remove too short words and words from "black" list i.e.
     # words like `ru`, `gmail`, `com`, `org`, etc.
-    sender = [
-        word
-        for word in sender.split()
-        if len(word) > 1 and word not in BAD_SENDER_NAMES
-    ]
+    sender = [word for word in sender.split() if len(word) > 1 and word not in BAD_SENDER_NAMES]
     # Remove duplicates
     names = list(set(sender))
     return names

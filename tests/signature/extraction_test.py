@@ -138,18 +138,14 @@ def test_mark_lines():
         # we analyse the 2nd line as well though it's the 6th line
         # (starting from the bottom) because we don't count empty line
         eq_(
-            "ttset",
-            e._mark_lines(
-                ["Bob Smith", "Bob Smith", "Bob Smith", "", "some text"], "Bob Smith"
-            ),
+            "ttset", e._mark_lines(["Bob Smith", "Bob Smith", "Bob Smith", "", "some text"], "Bob Smith"),
         )
 
     with patch.object(bruteforce, "SIGNATURE_MAX_LINES", 3):
         # we don't analyse the 1st line because
         # signature cant start from the 1st line
         eq_(
-            "tset",
-            e._mark_lines(["Bob Smith", "Bob Smith", "", "some text"], "Bob Smith"),
+            "tset", e._mark_lines(["Bob Smith", "Bob Smith", "", "some text"], "Bob Smith"),
         )
 
 
@@ -164,8 +160,7 @@ def test_process_marked_lines():
     eq_((list(range(7)), [7, 8]), e._process_marked_lines(list(range(9)), "tsslsless"))
 
     eq_(
-        (list(range(20)), [20]),
-        e._process_marked_lines(list(range(21)), "ttttttstttesllelelets"),
+        (list(range(20)), [20]), e._process_marked_lines(list(range(21)), "ttttttstttesllelelets"),
     )
 
     # some signature lines could be identified as text

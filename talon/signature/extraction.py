@@ -108,6 +108,6 @@ def _process_marked_lines(lines, markers):
     # reverse lines and match signature pattern for reversed lines
     signature = RE_REVERSE_SIGNATURE.match(markers[::-1])
     if signature:
-        return lines[: -signature.end()], lines[-signature.end():]
+        return lines[: -signature.end()], lines[-signature.end() :]
 
     return lines, None
