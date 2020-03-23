@@ -212,6 +212,38 @@ RE_ANDROID_WROTE = re.compile(
     re.I,
 )
 
+
+# Den fre 20 mars 2020 kl 14:35 skrev Timmy Timone <
+# message-from@timmy.timone.com>:
+# Gmail clients sometimes have a different structure for dates in other languages, for example Swedish
+ALTERNATE_DATE_PATTERN = re.compile(
+    r"({0})[ ](\S+)[ ].*(.+):?-*.*\s\S+@\S+".format(
+        u"|".join(
+            (
+                # English
+                "On",
+                # French
+                "Le",
+                # Polish
+                "W dniu",
+                # Dutch
+                "Op",
+                # German
+                "Am",
+                # Portuguese
+                "Em",
+                # Norwegian
+                "På",
+                # Swedish, Danish
+                "Den",
+                # Vietnamese
+                u"Vào",
+            )
+        )
+    )
+)
+
+
 # Support polymail.io reply format
 # On Tue, Apr 11, 2017 at 10:07 PM John Smith
 #
@@ -225,6 +257,7 @@ SPLITTER_PATTERNS = [
     RE_ON_DATE_SMB_WROTE,
     RE_ON_DATE_WROTE_SMB,
     RE_FROM_COLON_OR_DATE_COLON,
+    ALTERNATE_DATE_PATTERN,
     # 02.04.2012 14:20 пользователь "bob@example.com" <
     # bob@xxx.mailgun.org> написал:
     re.compile(r"(\d+/\d+/\d+|\d+\.\d+\.\d+).*\s\S+@\S+", re.S),

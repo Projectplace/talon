@@ -64,7 +64,6 @@ def test_pattern_on_date_wrote_somebody():
         "Lorem",
         quotations.extract_from_plain(
             """Lorem
-
 Op 13-02-2014 3:18 schreef Julius Caesar <pantheon@rome.com>:
 
 Veniam laborum mlkshk kale chips authentic. Normcore mumblecore laboris, fanny pack readymade eu blog chia pop-up freegan enim master cleanse.
@@ -90,6 +89,18 @@ def test_date_time_email_splitter():
 
 2014-10-17 11:28 GMT+03:00 Postmaster <
 postmaster@sandboxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.mailgun.org>:
+
+> First from site
+>
+    """
+    eq_("Test reply", quotations.extract_from_plain(msg_body))
+
+
+def test_date_time_email_splitter():
+    msg_body = """Test reply
+
+Den fre 20 mars 2020 kl 14:35 skrev Timmy Timone <
+message-from@timmy.timone.com>:
 
 > First from site
 >
