@@ -96,13 +96,13 @@ postmaster@sandboxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.mailgun.org>:
     eq_("Test reply", quotations.extract_from_plain(msg_body))
 
 
-def test_date_time_email_splitter():
+def test_alternate_date_time_email_splitter():
     msg_body = """Test reply
 
 Den fre 20 mars 2020 kl 14:35 skrev Timmy Timone <
 message-from@timmy.timone.com>:
 
-> First from site
+> Lalalala
 >
     """
     eq_("Test reply", quotations.extract_from_plain(msg_body))
